@@ -21,7 +21,7 @@ func PrintGreeting() {
 }
 
 func DisplaySeparator() {
-	fmt.Println("--------------------")
+	fmt.Println(strings.Repeat("-", 20))
 }
 
 func NotifyStart() {
