@@ -7,11 +7,65 @@ import (
 func main(){
 	//concatenator := func(s1, s2 string) string { return s1+s2 }
 	//println(concatenator("yes", "sir"))
+	//1
+	PrintGreeting()
+	DisplaySeparator()
+	NotifyStart()
+
+	//2
+	message := GetWelcomeMessage()
+	fmt.Println(message)
+
+	pi := GetPiValue()
+	fmt.Println(pi)
+
+	on_off := IsServerActive()
+	fmt.Println(on_off)
+
+	//3
+	PrintNumber(49)
+	GreetUser("Mark")
+	ToggleLight(true)
 	fmt.Println(Calculate(5, 20, adder))
 
+	//4
+	a := Add(5, 9)
+	fmt.Println(a)
+
+	s := Concat("hel", "lo")
+	fmt.Println(s)
+
+	is_odd := !IsEven(a)
+	fmt.Println(is_odd)
+
+	//5
+	b := adder(3, 2)
+	fmt.Println(b)
+
+	s2 := concatenator("mes", "sage")
+	fmt.Println(s2)
+
+	info := isPositive(-32)
+	fmt.Println(info)
+	
+	//6
+	c := Calculate(10, -5, adder)
+	fmt.Println(c)
+
+	Execute(true, ToggleLight)
+
+	d:= Apply(32, Multiplier(5))
+	fmt.Println(d)
+
+	//7
 	multiply_to_five := Multiplier(5)
 	fmt.Println(multiply_to_five(3))
 
+	repeat_3times := StringRepeater(3)
+	fmt.Println(repeat_3times("repeated! "))
+
+	printer := ConditionalPrinter(true)
+	printer("Conditional printer worked!")
 }
 
 //1
@@ -75,7 +129,6 @@ func IsEven(n int) bool {
 //5
 
 var adder func(int, int) int = func( a, b int) int { return a + b }
-var subtractor func(int, int) int = func( a, b int) int { return a - b }
 var concatenator func(string, string) string = func(s1, s2 string) string { return s1 + s2}
 var isPositive func(int) bool = func(i int) bool { return i > 0}
 
