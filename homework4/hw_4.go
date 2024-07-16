@@ -34,14 +34,26 @@ func main() {
 	fmt.Println(operation(-24, 15))
 	//14 concat
 	fmt.Println(concat("Good", "morning"))
-	//16
-
+	//15 multiply
+	multiply(-2, 4)
+	//16 ApplyOperation
+	fmt.Println(ApplyOperation(42, 19, operation))
 	//17
 	CheckCondition(21, number_check)
 	//18
 	FormatAndPrint("this is not an empty string", formatting_func)
+	//19 
+	multiply_to5 := CreateMultiplier(-5)
+	fmt.Println(multiply_to5(2))
+	//20
+	morning_greeter := CreateGreeter("Good morning")
+	fmt.Println(morning_greeter("Muqaddas"))
+	//21
+	pass_func := CreateValidator("password")
+	fmt.Println(pass_func("password1"))
 }
 
+//1
 func PrintGreeting() {
 	var dayType string
 	fmt.Println("Пожалуйста, введите dayType")
@@ -55,6 +67,7 @@ func PrintGreeting() {
 	}
 }
 
+//2
 func PrintWeather(){
 	var weatherType  string
 	fmt.Println("Пожалуйста, введите weatherType")
@@ -68,6 +81,7 @@ func PrintWeather(){
 	}
 }
 
+//3
 func PrintTrafficLight() {
 	var lightColor string
 	fmt.Println("Пожалуйста, введите lightColor")
@@ -83,6 +97,7 @@ func PrintTrafficLight() {
 	}
 }
 
+//4
 func GetGrade() string{
 	var scope float64
 	result := "Введен невозможный балл"
@@ -98,6 +113,7 @@ func GetGrade() string{
 	return result
 }
 
+//5
 func GetDiscount() string {
 	var amount int
 	result := "0%"
@@ -111,6 +127,7 @@ func GetDiscount() string {
 	return result
 }
 
+//6
 func GetTemperatureDescription() string {
 	var temperature float64
 	result := ""
@@ -126,6 +143,7 @@ func GetTemperatureDescription() string {
 	return result
 }
 
+//7
 func CheckNumber(n int) {
 	if n < 0 {
 		fmt.Println("Negative")
@@ -136,6 +154,7 @@ func CheckNumber(n int) {
 	}
 }
 
+//8
 func CheckAge(age int) {
 	if age < 18 {
 		fmt.Println("Несовершеннолетний")
@@ -144,6 +163,7 @@ func CheckAge(age int) {
 	}
 }
 
+//9
 func CheckPassword(password string) {
 	if password == "1234" {
 		fmt.Println("Пароль верный")
@@ -152,6 +172,7 @@ func CheckPassword(password string) {
 	}
 }
 
+//10
 func Add(a, b int) int {
 	if a < 0 {
 		a = -a
@@ -162,6 +183,7 @@ func Add(a, b int) int {
 	return a + b
 }
 
+//11
 func CompareStrings(s1, s2 string) string {
 	if s1 == s2 {
 		return "равны"
@@ -170,6 +192,7 @@ func CompareStrings(s1, s2 string) string {
 	}
 }
 
+//12
 func Max(a, b float64) float64 {
 	if a > b {
 		return a
@@ -178,6 +201,7 @@ func Max(a, b float64) float64 {
 	}
 }
 
+//13
 func operation(a, b int) int {
 	if a > b {
 		return a - b
@@ -186,6 +210,7 @@ func operation(a, b int) int {
 	}
 }
 
+//14
 var concat func(string, string) string = func(s1, s2 string) string {
 	if s1 == "" || s2 == "" {
 		return s1 + s2
@@ -194,6 +219,7 @@ var concat func(string, string) string = func(s1, s2 string) string {
 	}
 }
 
+//15
 var multiply func(int, int) int = func(a, b int) int {
 	if a < 0 {
 		a = -a
@@ -204,6 +230,7 @@ var multiply func(int, int) int = func(a, b int) int {
 	return a * b
 }
 
+//16
 func ApplyOperation(a, b int, f func(n1, n2 int) int) int{
 	if a < 0 {
 		a = -a
