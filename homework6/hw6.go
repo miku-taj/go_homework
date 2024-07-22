@@ -45,6 +45,12 @@ func main() {
 	compound_interest(&investment_amount)
 	compound_interest(&investment_amount)
 
+	//5
+	course := 74.5
+	fmt.Println(convert(&course, 1000))
+	update_course(&course, 71)
+	fmt.Println(convert(&course, 2000))
+
 	//7
 	daily_balance := 5000 
 	expenditure := 0
@@ -169,6 +175,19 @@ func accrual(bank_account *int, add_invest ...int) {
 		}
 		fmt.Println("Вклад равен ", *bank_account)
 	}
+}
+
+//5
+func update_course(old_course *float64, new_course float64) {
+	if new_course < 70 {
+		fmt.Println("Too low")
+	} else {
+		*old_course = new_course
+	}
+}
+
+func convert(course *float64, usd float64) float64{
+	return usd * (*course)
 }
 
 //6
