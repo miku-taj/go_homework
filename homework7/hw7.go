@@ -52,6 +52,53 @@ func main() {
 	through_node_chain(&n1)
 	delete_node(&n1, 3)
 	through_node_chain(&n1)
+	project := AssignedProject{Tasks: []AssignedTask{AssignedTask{Title: "Go task"}, AssignedTask{Title: "Cpp task"}, AssignedTask{Title: "Marketing task"}} , CompletionPercentage: 10.2345}
+	fmt.Println(about_assigned_project(project))
+
+	//44
+	e1 := Employee{
+		ID: 000001,
+		Name: "Josh",
+	}
+	e2 := Employee{
+		ID: 000002,
+		Name: "Gemma",
+	}
+	e1.Next = &e2
+	e3 := Employee{
+		ID: 000003,
+		Name: "Korra",
+	}
+	e2.Next = &e3
+	e4 := Employee{
+		ID: 000004,
+		Name: "Zukoo",
+	}
+	e3.Next = &e4
+	print_employees(&e1)
+
+	//45
+	c1 := Client{
+		ID: 000001,
+		Name: "Naruto",
+	}
+	c2 := Client{
+		ID: 000002,
+		Name: "Albus",
+	}
+	c1.Next = &c2
+	c3 := Client{
+		ID: 000003,
+		Name: "Kurenai",
+	}
+	c2.Next = &c3
+	c4 := Client{
+		ID: 000004,
+		Name: "Sasuke",
+	}
+	add_clinet(&c1, c4)
+	print_clients(&c1)
+
 
 }
 
@@ -536,3 +583,159 @@ func about_secret_event(event struct {
 }) {
 	fmt.Printf("The %s event will take place on %s, %d in %s, %s", event.Title, event.Date.Month(), event.Date.Day(), event.Location.City, event.Location.Street)
 }
+
+
+//EXTRA:
+
+//41
+type Student struct {
+	ID int
+	Name string
+	Grades []float64
+}
+
+func average_mark(s Student) float64{
+	var sum float64 =0
+	for _, value := range s.Grades {
+		sum += value
+	}
+	return sum / float64(len(s.Grades))
+}
+
+func about_student(s Student) string {
+	return fmt.Sprintf("The student name is %s; The average gpa is %g", s.Name, average_mark(s))
+}
+
+func best_student(student_slice []Student) Student {
+	max_score := average_mark(student_slice[0])
+	best := student_slice[0]
+	for _, s := range student_slice {
+		if average_mark(s) > max_score {
+			max_score = average_mark(s)
+			best = s
+		}
+	}
+	return best
+}
+
+//42
+type AssignedTask struct {
+	Title string
+	Description string
+	Status string
+}
+type AssignedProject struct {
+	Name string
+	Tasks []AssignedTask
+	CompletionPercentage float64
+}
+
+func about_assigned_project(p AssignedProject) string{
+	result := fmt.Sprintf("The %s includes following tasks: ", p.Name)
+	for i, task := range p.Tasks {
+		if i != 0 {
+			result += ", "
+		}
+		result += task.Title
+	}
+	result += fmt.Sprintf("; It's %.2f percent competed ", p.CompletionPercentage)
+	return result
+}
+
+func closest_completion_project(ps []AssignedProject) AssignedProject {
+	max := ps[0].CompletionPercentage
+	p := ps[0]
+	for _, p0 := range ps {
+		if p0.CompletionPercentage > max {
+			max = p0.CompletionPercentage
+			p = p0
+		}
+	}
+	return p
+}
+
+//43 Account с полями AccountNumber и Balance
+type Account struct{
+	AccountNumber int
+	Balance float64
+}
+type Bank  struct{
+	Name string
+	Accounts []Account
+	TotalAssets float64
+}
+func about_bank(b Bank) string{
+	return fmt.Sprintf("The %s has %d accounts with total assets of %.2f dollars", b.Name, len(b.Accounts), b.TotalAssets)
+}
+
+//44
+type Employee struct{
+	ID int
+	Name string
+	Next *Employee
+}
+func print_employees(e *Employee) {
+	fmt.Println("ID: ", e.ID, " Name: ", e.Name)
+	if e.Next != nil {
+		print_employees(e.Next)
+	}
+}
+
+//45
+type Client struct{
+	ID int
+	Name string
+	Next *Client
+}
+func add_clinet(first_client *Client, new_client Client){
+	if first_client.Next != nil {
+		add_clinet(first_client.Next, new_client)
+	} else {
+		first_client.Next = &new_client
+	}
+}
+func print_clients(e *Client) {
+	fmt.Println("ID: ", e.ID, " Name: ", e.Name)
+	if e.Next != nil {
+		print_clients(e.Next)
+	}
+}
+
+//46
+type BookNode struct{
+	Title string
+	Author string
+	Next *BookNode
+}
+//работает если есть только 1 нод с удаляемым значением
+func delete_book_node(n *BookNode, delete_title string) {
+	
+	if n.Title == delete_title {
+		//указателем на первый эл нода станет указатель на 2-ой. Так мы удалим первый нод
+		*n = *n.Next
+	} else {
+		n1 := n
+		for n1 != nil && n1.Next != nil {
+			if n1.Next.Title == delete_title {
+				n1.Next = n1.Next.Next
+			}
+			n1 = n1.Next
+		}
+	}
+}
+
+//47
+type Order struct{
+	OrderID int
+	Amount int
+	Next *Order
+}
+func total_order_amount(o *Order) {
+	total := o.Amount
+	for o.Next != nil {
+		o = o.Next
+		total += o.Amount
+	}
+}
+
+//48
