@@ -739,3 +739,98 @@ func total_order_amount(o *Order) {
 }
 
 //48
+type TaskNode struct{
+	ID int
+	Name string
+	Next *TaskNode
+}
+type ProjectNode struct{
+	Name string
+	Tasks *TaskNode
+}
+func tasks_number(p *ProjectNode) int {
+	t := p.Tasks
+	number := 0
+	for t!= nil {
+		number+=1
+		t = t.Next
+	}
+	return number
+}
+
+//49
+var anon_event struct{
+	EventID int
+	Name string
+	Location Address
+	Date string
+}
+func about_anon_event(e struct{
+	EventID int
+	Name string
+	Location Address
+	Date string
+}) string{
+	return fmt.Sprintf("The event %d (%s) will take place on %s, %s, %s", e.EventID, e.Name, e.Date, e.Location.City, e.Location.Street)
+}
+
+//50
+var anon_product struct{
+	ProductID int
+	Name string
+	Category string
+	Price float64
+}
+func about_anon_product(p struct{
+	ProductID int
+	Name string
+	Category string
+	Price float64
+}) string{
+	return fmt.Sprintf("Product %d (%s) belongs to %s Category and costs %g", p.ProductID, p.Name, p.Category, p.Price)
+}
+
+//51
+var anon_order struct{
+	OrderID int
+	Product string
+	Quantity int
+}
+func about_anon_order(o struct{
+	OrderID int
+	Product string
+	Quantity int
+}) string{
+	return fmt.Sprintf("The Order ID%d: Product - %s; Quantity - %d", o.OrderID, o.Product, o.Quantity)
+}
+
+//52
+var anon_client struct{
+	ClientID int
+	Name string
+	Email string
+	Phone string
+}
+
+func about_anon_client(c struct{
+	ClientID int
+	Name string
+	Email string
+	Phone string
+}) string{
+	return fmt.Sprintf("Client ID%d (%s) contact information:\nEmail: %s\nPhone: %s", c.ClientID, c.Name, c.Email, c.Phone)
+}
+
+//53
+var anon_lib struct {
+	LibraryID int
+	Name string
+	Location Address
+}
+func abou_anon_lib(l struct {
+	LibraryID int
+	Name string
+	Location Address
+}) string{
+	return fmt.Sprintf("The Library Id%d (%s) is located in %s, %s", l.LibraryID, l.Name, l.Location.City, l.Location.Street)
+}
