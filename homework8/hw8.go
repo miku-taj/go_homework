@@ -3,13 +3,13 @@ package main
 import "fmt"
 
 func main() {
-	var a [9]int
+	var a [3]int
 	fmt.Println("Enter ", len(a) ," array elements")
 	for i := 0; i < len(a); i++ {
 		fmt.Scan(&a[i])
 	}
 
-	maxim := a[0]
+		maxim := a[0]
 	minim := a[0]
 	positive := 0
 	sum := 0
@@ -383,9 +383,25 @@ func main() {
 		}
 	}
 	fmt.Println(longest_zero_subset)
+
 	
 	//30
-	
+	nod := a[0]
+	for i := 1; i < len(a); i++ {
+		n = a[i]
+		//nod and n
+		for nod != 0 && n!= 0 {
+			nod = nod % n
+			if nod == 0 {
+				break
+			}
+			n = n % nod
+		}
+		if nod == 0 {
+			nod = n
+		}
+	}
+	fmt.Println(nod)
 
 
 }
