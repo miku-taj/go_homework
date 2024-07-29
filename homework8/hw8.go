@@ -8,7 +8,8 @@ func main() {
 	for i := 0; i < len(a); i++ {
 		fmt.Scan(&a[i])
 	}
-		maxim := a[0]
+
+	maxim := a[0]
 	minim := a[0]
 	positive := 0
 	sum := 0
@@ -290,6 +291,101 @@ func main() {
 	}
 	fmt.Println(subsets)
 
+	//22
+	fmt.Scan(&n)
+	for i := 0; i < len(a) -1 ; i++ {
+		for j := i + 1; j < len(a); j ++ {
+			if a[i] + a[j] == n {
+				fmt.Println("Элементы номер ", i, " и ", j, "дают сумму ", n)
+			}
+		}
+	}
+
+	//23
+	m := 1
+	cond := true
+	for cond {
+		for i, val := range a {
+			if val == m {
+				m ++
+				break
+			}
+			if i == len(a)-1 {
+				cond = false
+			}
+		}
+	}
+	fmt.Println("наименьший положительный элемент, отсутствующий в массиве: ", m)
+
+	//25
+	fmt.Println("Task 25, enter a number: ")
+	fmt.Scan(&n)
+	max_len := 0
+	for i := range a {
+		sum = 0
+		for j := i; j < len(a); j ++ {
+			sum += a[j]
+			if sum == n && len(a[i : j+1]) > max_len {
+				max_len = len(a[i : j+1])
+			}
+		}
+	}	
+	fmt.Println("максимальная длина подмассива, сумма элементов которого равна заданному числу ", n, ", равна ", max_len)
+
+	//26
+	product := a[0] * a[1] * a[2]
+	for i := 0; i < len(a) - 2; i++ {
+		for j := i + 2; j < len(a); j++ {
+			if a[i] * a[i+1] * a[j] > product {
+				product = a[i] * a[i+1] * a[j]
+			}
+		}
+	}
+	fmt.Println("максимальное произведение трех чисел в массиве: ", product)
+
+	//27
+	max_sum := a[0]
+	max_sum_slice := []int{a[0]}
+	for i := range a {
+		sum = 0
+		for j := i; j < len(a); j ++ {
+			sum += a[j]
+			if sum > max_sum {
+				max_sum = sum
+				max_sum_slice = a[i:j+1]
+			}
+		}
+	}
+	fmt.Println("подмассив с максимальной суммой: ", max_sum_slice, " его сумма: ", max_sum)
+
+	//28
+	pos_slice := []int{}
+	neg_slice := []int{}
+	for _, val := range a {
+		if val < 0 {
+			neg_slice = append(neg_slice, val)
+		} else {
+			pos_slice = append(pos_slice, val)
+		}
+	}
+	a_neg_to_beg := append(neg_slice, pos_slice...)
+	fmt.Println("Массив, где отрицательные числа перемещены в начало массива: ", a_neg_to_beg)
+
+	//29
+	longest_zero_subset := []int{}
+	for i := range a {
+		sum = 0
+		for j := i; j < len(a); j ++ {
+			sum += a[j]
+			if sum == 0 && len(a[i : j+1]) > len(longest_zero_subset){
+				longest_zero_subset = a[i : j+1]
+			}
+		}
+	}
+	fmt.Println(longest_zero_subset)
+	
+	//30
+	
 
 
 }
