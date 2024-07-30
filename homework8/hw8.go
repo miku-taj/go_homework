@@ -9,7 +9,7 @@ func main() {
 		fmt.Scan(&a[i])
 	}
 
-		maxim := a[0]
+	maxim := a[0]
 	minim := a[0]
 	positive := 0
 	sum := 0
@@ -317,6 +317,26 @@ func main() {
 	}
 	fmt.Println("наименьший положительный элемент, отсутствующий в массиве: ", m)
 
+	//24
+	max_sum := a[0]
+	max_sum_slice := []int{a[0]}
+	sum_slice := []int{}
+	for i := 0; i < len(a); i++{
+		sum = 0
+		sum += a[i]
+		sum_slice = append(sum_slice, a[i])
+		for j := i + 1; j < len(a); j ++ {
+			if  len(without_duplicates(sum_slice)) == 2 {
+
+			}
+
+			if sum > max_sum {
+				max_sum = sum
+				max_sum_slice = a[i:j+1]
+			}
+		}
+	}
+
 	//25
 	fmt.Println("Task 25, enter a number: ")
 	fmt.Scan(&n)
@@ -344,8 +364,8 @@ func main() {
 	fmt.Println("максимальное произведение трех чисел в массиве: ", product)
 
 	//27
-	max_sum := a[0]
-	max_sum_slice := []int{a[0]}
+	max_sum = a[0]
+	max_sum_slice = []int{a[0]}
 	for i := range a {
 		sum = 0
 		for j := i; j < len(a); j ++ {
@@ -404,4 +424,24 @@ func main() {
 	fmt.Println(nod)
 
 
+}
+
+func without_duplicates(s []int) []int {
+	result := []int{}
+	var is_included bool
+	for _, val := range s {
+		is_included = false
+		//проверим есть ли элемент в масиве без дубликатов
+		for _, val2 := range result {
+			if val == val2 {
+				is_included = true
+				break
+			}
+		}
+		//если элемента в массиве без дубликатов нет, то добавим его
+		if !is_included {
+			result = append(result, val)
+		}
+	}
+	return result
 }

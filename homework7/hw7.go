@@ -456,12 +456,11 @@ func delete_node(n *Node, delete_value int) {
 		//указателем на первый эл нода станет указатель на 2-ой. Так мы удалим первый нод
 		*n = *n.Next
 	} else {
-		n1 := n
-		for n1 != nil && n1.Next != nil {
-			if n1.Next.Value == delete_value {
-				n1.Next = n1.Next.Next
+		for n != nil && n.Next != nil {
+			if n.Next.Value == delete_value {
+				n.Next = n.Next.Next
 			}
-			n1 = n1.Next
+			n = n.Next
 		}
 	}
 }
