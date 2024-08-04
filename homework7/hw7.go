@@ -52,8 +52,6 @@ func main() {
 	through_node_chain(&n1)
 	delete_node(&n1, 3)
 	through_node_chain(&n1)
-	project := AssignedProject{Tasks: []AssignedTask{AssignedTask{Title: "Go task"}, AssignedTask{Title: "Cpp task"}, AssignedTask{Title: "Marketing task"}} , CompletionPercentage: 10.2345}
-	fmt.Println(about_assigned_project(project))
 
 	//44
 	e1 := Employee{
