@@ -314,4 +314,47 @@ func SortByLength(s string) string{
 	}
 	return strings.TrimSuffix(final, " ")
 }
+//27	Напишите функцию, которая генерирует все подстроки заданной строки.
+func GenerateSubstrings(s string) []string{
+	result := []string{}
+	for i:= 0; i < len(s); i++ {
+		for j:= i; j <= len(s); j++ {
+			result= append(result, s[i:j])
+		}
+	}
+	return result
+}
 
+
+//28	Напишите функцию, которая ищет все анаграммы строки в другой строке.
+func isAnagram(s, anagram string) bool{
+	for _, el := range anagram {
+		if strings.Count(s, string(el)) > 0 {
+			anagram = strings.Replace(anagram, string(el), "", 1)
+			s = strings.Replace(s, string(el), "", 1)
+		}
+	}
+	return s == "" && anagram == ""
+}
+//функция возвращает карту, ключи - слова из 1 строки
+//значения - слайсы из анагрм данного слова из строки 2
+func findAnagram(s1, s2 string) map[string][]string{
+	var anagram_map map[string][]string = map[string][]string{}
+	s1_words := strings.Split(s1, " ")
+	s2_words := strings.Split(s2, " ")
+	for _, word := range s1_words {
+		anagram_map[word] = []string{}
+		for _, word2 := range s2_words {
+			if isAnagram(word, word2) {
+				anagram_map[word] = append(anagram_map[word], word2)
+			}
+		}
+	}
+	return anagram_map
+}
+
+//29
+func WordsSymbolsNumber(s string) [2]int{
+	words := strings.Split(s, " ")
+	return [2]int{len(words), len([]rune(s))}
+}
