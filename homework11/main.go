@@ -291,3 +291,27 @@ func MixWords(s string) string{
 }
 
 //25
+func SortByLength(s string) string{
+	final := ""
+	words := strings.Split(s, " ")
+	temp := ""
+	k:= 0
+	for i := 1; i < len(words); i ++{
+		k = i - 1
+		for k >= 0 {
+			if len(words[k]) > len(words[k+1]){
+				temp = words[k]
+				words[k] = words[k+1]
+				words[k+1] = temp
+				k --
+			} else {
+				break
+			}
+		}
+	}
+	for _, el := range words{
+		final += el + " "
+	}
+	return strings.TrimSuffix(final, " ")
+}
+
