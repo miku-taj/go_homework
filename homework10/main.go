@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -486,6 +487,112 @@ func (om *OrderManager2) TotalActiveOrders() int{
 }
 
 //26
+type Task2 struct{
+	Title string
+	Description string
+	Status string
+}
+type Project struct{
+	Tasks []Task2
+}
+func (p *Project) AddTask(title, description, status string){
+	p.Tasks = append(p.Tasks, Task2{title, description, status,})
+}
+func (p Project) CountTasksByStatus(status string) int{
+	n := 0
+	for _, el := range p.Tasks{
+		if el.Status == status{
+			n++
+		}
+	}
+	return n
+}
+
+//27
+type User struct{
+	Username string
+	Email string
+	Age int
+}
+type UserManager struct{
+	Users []User
+}
+func (u *UserManager) AddUser(username, email string, age int){
+	u.Users = append(u.Users, User{username, email, age})
+}
+func (u UserManager) UsersOlderThan(age int) []User{
+	older := []User{}
+	for _, user := range u.Users{
+		if user.Age > age {
+			older = append(older, user)
+		}
+	}
+	return older
+}
+
+//28
+type Contract struct{
+	ContractID int
+	Client string
+	amount float64
+}
+type ContractManager struct{
+	Contracts []Contract
+}
+func (cm *ContractManager) AddContract(contractID int, client string, amount float64){
+	cm.Contracts = append(cm.Contracts, Contract{contractID, client, amount})
+}
+func (cm ContractManager) TotalAmountForClient(client string) float64{
+	total := 0.0
+	for _, c := range cm.Contracts{
+		if c.Client == client {
+			total += c.amount
+		}
+	}
+	return total
+}
+//29
+type Book2 struct{
+	Title string
+	Author string
+	Year int 
+}
+type Library2 struct{
+	Books []Book2
+}
+func (l *Library2) AddBook(title, author string, year int){
+	l.Books = append(l.Books, Book2{title, author, year})
+}
+func (l Library2) BooksByAuthorsAfterYear(year int) []Book2{
+	books := []Book2{}
+	for _, b := range l.Books{
+		if b.Year > year{
+			books = append(books, b)
+		}
+	}
+	return books
+}
+//30
+type Activity struct{
+	ActivityType string
+	Timestamp time.Time
+}
+type UserActivityTracker struct{
+	Activities []Activity
+}
+func (tracker *UserActivityTracker) AddActivity(activityType string, timestamp time.Time){
+	tracker.Activities = append(tracker.Activities, Activity{activityType, timestamp})
+}
+func (tracker UserActivityTracker) ActivitiesAfterTime(timestamp time.Time) []Activity{
+	activities := []Activity{}
+	for _, a := range tracker.Activities{
+		if a.Timestamp.After(timestamp){
+			activities = append(activities, a)
+		}
+	}
+	return activities
+}
+
 
 
 
