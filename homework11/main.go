@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/sha256"
 	"fmt"
 	"strings"
 	"strconv"
@@ -314,6 +315,15 @@ func SortByLength(s string) string{
 	}
 	return strings.TrimSuffix(final, " ")
 }
+
+//26
+func returnSHA256(s string) string{
+	h := sha256.New()
+	h.Write([]byte(s))
+	code := fmt.Sprintf("%x", h.Sum(nil))
+	return code
+}
+
 //27	Напишите функцию, которая генерирует все подстроки заданной строки.
 func GenerateSubstrings(s string) []string{
 	result := []string{}
