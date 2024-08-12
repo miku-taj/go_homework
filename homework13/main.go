@@ -546,6 +546,77 @@ func (w *WorkTime) GetWorkingHours(employeeID string) float64{
 }
 
 //27
+type StudentManager interface{
+	AddStudent(name string, studentID string)
+	GetStudentDetails(studentID string) (string, string)
+}
+type University struct{
+	Students map[string]string
+}
+func (u *University) AddStudent(name string, studentID string){
+	u.Students[studentID] = name
+}
+func (u *University) GetStudentDetails(studentID string) (string, string){
+	return studentID, u.Students[studentID]
+}
+func (u *University) GetAllStudents() map[string]string{
+	return u.Students
+}
+
+//28
+type ExpenseManager interface{
+	AddExpense(category string, amount float64)
+	GetTotalExpenses(category string) float64
+}
+type Enterprise struct{
+	Expenses map[string]float64
+}
+func (e *Enterprise) AddExpense(category string, amount float64){
+	e.Expenses[category] += amount
+}
+func (e *Enterprise) GetTotalExpenses(category string) float64{
+	return e.Expenses[category]
+}
+func (e *Enterprise) GetAllExpenses() map[string]float64{
+	return e.Expenses
+}
+
+//29
+type CourseManager interface{
+	AddCourse(courseName string, credits int)
+	GetCourseCredits(courseName string) int
+}
+type EducationInstitution struct{
+	Courses map[string]int
+}
+func (ei *EducationInstitution) AddCourse(courseName string, credits int){
+	ei.Courses[courseName] = credits
+}
+func (ei *EducationInstitution) GetCourseCredits(courseName string) int{
+	return ei.Courses[courseName]
+}
+func (ei *EducationInstitution) GetAllCourses() map[string]int{
+	return ei.Courses
+}
+
+//30
+type UtilityBillManager interface{
+	AddBill(utilityType string, amount float64)
+	GetTotalBills(utilityType string) float64
+}
+type Household struct{
+	Bills map[string]float64
+}
+func (h *Household) AddBill(utilityType string, amount float64){
+	h.Bills[utilityType] += amount
+}
+func (h *Household) GetTotalBills(utilityType string) float64 {
+	return h.Bills[utilityType]
+}
+func (h *Household) GetAllBills() map[string]float64{
+	return h.Bills
+}
+
 
 
 
