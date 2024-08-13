@@ -9,6 +9,7 @@ import (
 	"strings"
 	"unicode"
 )
+
 //1
 func countCharacters(fileName string) (int, error) {
 	n := 0
@@ -240,7 +241,142 @@ func countUniqueWords(fileName string) (int, error){
 }
 
 //12
-// func replace
+func replaceWordInFile(fileName, oldWord, newWord string) error{
+	file, err := os.Open(fileName)
+	if err != nil {
+		return err
+	}
+	fileName_copy := fileName+"v2"
+	file_copy, err := os.Create(fileName_copy)
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+	for scanner.Scan(){
+		words := strings.Split(scanner.Text(), " ")
+		for _, word := range words{
+			if strings.ToLower(word) != strings.ToLower(oldWord){
+				_, err = file_copy.WriteString(word + " ")
+
+			} else {
+				_, err = file_copy.WriteString(newWord + " ")
+			}
+			if err != nil {
+				return err
+			}
+		}
+		file_copy.WriteString("\n")
+		fmt.Println(scanner.Text(), "added")
+	}
+	file.Close()
+	err = os.Remove(fileName)
+	if err != nil {
+		return err
+	}
+	file_copy.Close()
+	err = os.Rename(fileName_copy, fileName)
+	return err
+}
+
+//13
+func wordFrequency(fileName string) (map[string]int, error){
+	words_map := map[string]int{}
+	file, err := os.Open(fileName)
+	defer file.Close()
+	if err != nil {
+		return make(map[string]int), err
+	}
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanWords)
+	for scanner.Scan(){
+		words_map[strings.ToLower(scanner.Text())] ++
+		if scanner.Err() != nil {
+			return map[string]int{}, nil
+		}
+	}
+	return words_map, nil
+}
+
+//14
+func reverseLines(fileName, outputFile string) error{
+	file, err := os.Open(fileName)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	output, err := os.OpenFile(outputFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		return err
+	}
+	defer output.Close()
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+	for scanner.Scan(){
+		line := scanner.Text()
+		for i := len(line)-1 ; i >= 0; i--{
+			output.WriteString(string(line[i]))
+		}
+		_, err = output.WriteString("\n")
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+//15
+func removeEmptyLines(fileName, outputFile string) error{
+	src_file, err := os.Open(fileName)
+	if err != nil {
+		return err
+	}
+	defer src_file.Close()
+	dst_file, err := os.OpenFile(outputFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		return err
+	}
+	defer dst_file.Close()
+	scanner := bufio.NewScanner(src_file)
+	scanner.Split(bufio.ScanLines)
+	for scanner.Scan(){
+		if strings.Trim(scanner.Text(), " ") != ""{
+			_, err := dst_file.WriteString(scanner.Text()+"\n")
+			if err != nil {
+				return err
+			}
+			fmt.Printf("%#v This line is not empty!", scanner.Text())
+		}
+	}
+	return nil
+}
+
+//16
+func compareFiles(file1, file2 string) (bool, error){
+	f1, err := os.Open(file1)
+	if err != nil {
+		return false, err
+	}
+	defer f1.Close()
+	f2, err := os.Open(file2)
+	if err != nil {
+		return false, err
+	}
+	defer f2.Close()
+	equal := true
+	scanner1 := bufio.NewScanner(f1)
+	scanner1.Split(bufio.ScanLines)
+	scanner2 := bufio.NewScanner(f2)
+	scanner2.Split(bufio.ScanLines)
+	for scanner1.Scan() && scanner2.Scan(){
+		if scanner1.Text() != scanner2.Text(){
+			equal = false
+			break
+		}
+	}
+	if scanner1.Scan() || scanner2.Scan() {
+		equal = false
+	}
+	return equal, nil
+}
 
 
 
@@ -255,6 +391,16 @@ func main(){
 	//fmt.Println(concatenateFiles("text.txt", "copy_text.txt", "concatenate.txt"))
 	//fmt.Println(fileExists("text.txt"))
 	//fmt.Println(countUniqueWords("text.txt"))
-	//fmt.Println(reverseReadFile("text.txt"))
-	
+	//fmt.Println(reverseReadFile("text.txt"))	
+	//fmt.Println(replaceWordInFile("text.txt", "music", "text"))
+	// n, _ := wordFrequency("text.txt")
+	// fmt.Printf("%#v", n)
+	//fmt.Println(reverseLines("text.txt", "text2.txt"))
+	// fmt.Println(removeEmptyLines("text.txt", "text2.txt"))
+	// m1 := map[string]int{
+	// 	"Hello": 1,
+	// 	"Map": 2,
+	// }
+	// fmt.Printf("%#v", m1)
+	fmt.Println(compareFiles("text.txt", "text3.txt"))
 }
