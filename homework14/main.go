@@ -9,7 +9,7 @@ import (
 	"strings"
 	"unicode"
 )
-
+//1
 func countCharacters(fileName string) (int, error) {
 	n := 0
 	file, err := os.Open(fileName)
@@ -26,6 +26,7 @@ func countCharacters(fileName string) (int, error) {
 	return n, nil
 }
 
+//2
 func countLines(fileName string) (int, error){
 	lines_number := 0
 	file, err := os.Open(fileName)
@@ -107,11 +108,11 @@ func copyFile(src, dst string) error{
 	}
 	buf := make([]byte, 2)
 	for {
-		_, err1 = src_file.Read(buf)
+		n, err1 := src_file.Read(buf)
 		if err1 == io.EOF {
 			break
 		}
-		_, err2 = dst_file.Write(buf)
+		_, err2 = dst_file.Write(buf[:n])
 		if err1 != nil {
 			return err1
 		}
@@ -141,17 +142,35 @@ func readAndWriteToFile(fileName string) error{
 	return nil
 }
 //8
-// func reverseReadFile(fileName string) (string, error){
-// 	file, err := os.Open(fileName)
-// 	if err != nil {
-// 		return "", err
-// 	}
-// 	scanner := bufio.NewScanner(file)
-// 	scanner.Split(bufio.ScanLines)
-// 	for scanner.Scan(){
-// 		_, err := 
-// 	}
-// }
+func reverseReadFile(fileName string) (string, error){
+	file, err := os.Open(fileName)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+	buf := make([]byte, 1)
+
+	position := 0
+	s := ""
+	for {
+		position --
+		cur, err := file.Seek(int64(position), io.SeekEnd)
+		fmt.Println("reading from ", cur)
+		_, err1 := file.Read(buf)
+		s += string(buf)
+		if cur == 0{
+			break
+		}
+		if err != nil {
+			return "", err
+		}
+		if err1 != nil {
+			return "", err
+		}
+		fmt.Println(s)
+	}
+	return s, nil
+}
 
 //9
 func concatenateFiles(file1, file2, outputFile string) error{
@@ -236,5 +255,6 @@ func main(){
 	//fmt.Println(concatenateFiles("text.txt", "copy_text.txt", "concatenate.txt"))
 	//fmt.Println(fileExists("text.txt"))
 	//fmt.Println(countUniqueWords("text.txt"))
-
+	//fmt.Println(reverseReadFile("text.txt"))
+	
 }
