@@ -378,7 +378,98 @@ func compareFiles(file1, file2 string) (bool, error){
 	return equal, nil
 }
 
+//18
+func countLinesWithWord(fileName, word string) (int, error){
+	lines_num := 0
+	file, err := os.Open(fileName)
+	if err != nil {
+		return lines_num, err
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+	for scanner.Scan(){
+		words := strings.Split(scanner.Text(), " ")
+		for _, cur_word := range words {
+			if word == cur_word {
+				lines_num ++
+			}
+		}
+	}
+	return lines_num, scanner.Err()
+}
 
+//19
+func generateRepeatedLinesFile(fileName, line string, count int) error{
+	file, err := os.Create(fileName)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	for i := 0; i < count; i++ {
+		if i < count - 1 {
+			_, err = file.WriteString(line+"\n")
+			if err != nil {
+				return err
+			}
+		} else {
+			_, err = file.WriteString(line)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+//20
+func countCharactersPerLine(fileName string) error{
+	file, err := os.Create(fileName)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+	for scanner.Scan(){
+		fmt.Println(len([]rune(scanner.Text())))
+	}
+	return scanner.Err()
+}
+
+//21
+func findLongestWord(fileName string) (string, error){
+	file, err := os.Open(fileName)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanWords)
+	word := ""
+	for scanner.Scan(){
+		if len([]rune(scanner.Text())) > len([]rune(word)){
+			word = scanner.Text()
+		}
+	}
+	return word, scanner.Err()
+}
+
+//22
+func charFrequency(fileName string) (map[rune]int, error){
+	file, err := os.Open(fileName)
+	if err != nil {
+		return make(map[rune]int), err
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanRunes)
+	rune_map := map[rune]int{}
+	for scanner.Scan(){
+		rune_map[[]rune(scanner.Text())[0]]++
+	}
+	return rune_map, scanner.Err()
+}
 
 func main(){
 	// fmt.Println(countCharacters("text.txt"))
@@ -402,5 +493,11 @@ func main(){
 	// 	"Map": 2,
 	// }
 	// fmt.Printf("%#v", m1)
-	fmt.Println(compareFiles("text.txt", "text3.txt"))
+	//fmt.Println(compareFiles("text.txt", "text3.txt"))
+	//fmt.Println(findLongestWord("text.txt"))
+	// map_char, _ := charFrequency("text.txt")
+	// for key, value := range map_char{
+	// 	fmt.Printf("%#v: %d\n", string(key), value)
+	// }
+
 }
